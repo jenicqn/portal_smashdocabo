@@ -3,21 +3,132 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Filtros</title>
+  <title>Filtros Avançados</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #333;
     }
-    iframe {
-      width: 100vw;
-      height: 100vh;
-      border: none;
+    .header-bar {
+      height: 58px;
+      background-color: #2596be;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .container-fluid {
+      display: flex;
+      height: calc(100vh - 58px);
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 260px;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      padding: 20px 0;
+      overflow-y: auto;
+    }
+    .sidebar h4 {
+      padding: 0 20px;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      color: #000;
+    }
+    .sidebar a,
+    .sidebar .menu-item {
+      display: block;
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .sidebar a:hover,
+    .sidebar a.active,
+    .sidebar .menu-item:hover {
+      background-color: #f0f4ff;
+      color: #0d6efd;
+    }
+    .sidebar a.active {
+      font-weight: bold;
+      background-color: #e8f0ff;
+    }
+    .submenu {
+      display: none;
+      background-color: #f9f9f9;
+    }
+    .submenu a {
+      padding-left: 40px;
+    }
+    .menu-with-submenu.active .submenu {
+      display: block;
+    }
+    .menu-separator {
+      border-bottom: 1px solid #2596be;
+      margin: 10px 0;
+    }
+    .content {
+      flex-grow: 1;
+      padding: 30px;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <iframe src="layout.html"></iframe>
+  <div class="header-bar">Portal SmashLovers</div>
+  <div class="container-fluid">
+    <div class="sidebar">
+      <h4>Menu</h4>
+      <a href="index.html">Geral</a>
+      <a href="pedidos.html">Pedidos</a>
+      <div class="menu-separator"></div>
+
+      <div class="menu-with-submenu active">
+        <div class="menu-item" onclick="toggleSubmenu(this)">Cardápio</div>
+        <div class="submenu">
+          <a href="produtos.html">Produtos</a>
+          <a href="categorias.html">Categorias</a>
+          <a href="complementos.html">Complementos</a>
+          <a href="filtros.html">Filtros Avançados</a>
+        </div>
+      </div>
+      <a href="cupons.html">Cupons</a>
+      <a href="entregas.html">Entregas</a>
+      <a href="caixa.html">Caixa</a>
+      <div class="menu-separator"></div>
+
+      <div class="menu-with-submenu active">
+        <div class="menu-item" onclick="toggleSubmenu(this)">Minha Empresa</div>
+        <div class="submenu">
+          <a href="perfil.html">Perfil</a>
+          <a href="horarios.html">Horários</a>
+          <a href="pagamento.html">Formas de Pagamento</a>
+          <a href="impressoras.html">Impressoras</a>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <h2>Filtros Avançados</h2>
+      <p>Em breve: aqui você poderá gerenciar filtros avançados.</p>
+    </div>
+  </div>
+  <script>
+    function toggleSubmenu(el) {
+      document.querySelectorAll('.menu-with-submenu').forEach(menu => {
+        if (menu !== el.parentNode) {
+          menu.classList.remove('active');
+        }
+      });
+      el.parentNode.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>

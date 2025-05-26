@@ -3,16 +3,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Portal Smash do Cabo</title>
+  <title>Painel - Início</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #ffffff;
-      color: #333;
-    }
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #ffffff; color: #333; }
     .header-bar {
       height: 58px;
       background-color: #2596be;
@@ -33,7 +28,9 @@
       background-color: #ffffff;
       border-right: 1px solid #e0e0e0;
       padding: 20px 0;
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .sidebar h4 {
       padding: 0 20px;
@@ -49,7 +46,6 @@
       text-decoration: none;
       font-weight: 500;
       transition: background 0.2s, color 0.2s;
-      cursor: pointer;
     }
     .sidebar a:hover,
     .sidebar a.active,
@@ -57,9 +53,9 @@
       background-color: #f0f4ff;
       color: #0d6efd;
     }
-    .sidebar a.active {
-      font-weight: bold;
-      background-color: #e8f0ff;
+    .menu-separator {
+      border-bottom: 1px solid #2596be;
+      margin: 5px 0;
     }
     .submenu {
       display: none;
@@ -71,78 +67,103 @@
     .menu-with-submenu.active .submenu {
       display: block;
     }
-    .menu-separator {
-      border-bottom: 1px solid #2596be;
-      margin: 10px 0;
+    .logout-button {
+      margin: 20px;
+      margin-top: 0;
+    }
+    .logout-button a {
+      display: block;
+      background-color: #2596be;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .logout-button a:hover {
+      background-color: #1b7aa3;
     }
     .content {
       flex-grow: 1;
-      padding: 0;
+      padding: 30px;
       overflow-y: auto;
     }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
     }
   </style>
 </head>
 <body>
-  <div class="header-bar">Portal SmashLovers</div>
+  <div class="header-bar">Portal Smash do Cabo</div>
   <div class="container-fluid">
     <div class="sidebar">
-      <h4>Menu</h4>
-      <a href="javascript:void(0)" onclick="carregarPagina('inicio.html')" class="active">Geral</a>
-      <a href="javascript:void(0)" onclick="carregarPagina('pedidos.html')">Pedidos</a>
-      <div class="menu-separator"></div>
-
-      <div class="menu-with-submenu">
-        <div class="menu-item" onclick="toggleSubmenu(this)">Cardápio</div>
-        <div class="submenu">
-          <a href="produtos.html" onclick="carregarPagina('produtos.html')">Produtos</a>
-          <a href="categorias.html" onclick="carregarPagina('categorias.html')">Categorias</a>
-          <a href="complementos.html" onclick="carregarPagina('complementos.html')">Complementos</a>
-          <a href="filtros.html" onclick="carregarPagina('filtros.html')">Filtros Avançados</a>
+      <div>
+        <h4>Menu</h4>
+        <a href="index.html" class="active">Geral</a>
+        <div class="menu-separator"></div>
+        <a href="pedidos.html">Pedidos</a>
+        <div class="menu-separator"></div>
+        <div class="menu-with-submenu">
+          <div class="menu-item" onclick="toggleSubmenu(this)">Cardápio</div>
+          <div class="submenu">
+            <a href="produtos.html">Produtos</a>
+            <a href="categorias.html">Categorias</a>
+            <a href="complementos.html">Complementos</a>
+            <a href="filtros.html">Filtros Avançados</a>
+          </div>
         </div>
+        <div class="menu-separator"></div>
+        <a href="cupons.html">Cupons</a>
+        <div class="menu-separator"></div>
+        <a href="entregas.html">Entregas</a>
+        <div class="menu-separator"></div>
+        <a href="caixa.html">Caixa</a>
+        <div class="menu-separator"></div>
+        <div class="menu-with-submenu">
+          <div class="menu-item" onclick="toggleSubmenu(this)">Minha Empresa</div>
+          <div class="submenu">
+            <a href="perfil.html">Perfil</a>
+            <a href="horarios.html">Horários</a>
+            <a href="pagamento.html">Formas de Pagamento</a>
+            <a href="impressoras.html">Impressoras</a>
+          </div>
+        </div>
+        <div class="menu-separator"></div>
+        <a href="configuracoes.html">Configurações</a>
       </div>
-      <a href="javascript:void(0)" onclick="carregarPagina('cupons.html')">Cupons</a>
-      <a href="javascript:void(0)" onclick="carregarPagina('entregas.html')">Entregas</a>
-      <a href="javascript:void(0)" onclick="carregarPagina('caixa.html')">Caixa</a>
-      <div class="menu-separator"></div>
-
-      <div class="menu-with-submenu">
-        <div class="menu-item" onclick="toggleSubmenu(this)">Minha Empresa</div>
-        <div class="submenu">
-          <a href="perfil.html" onclick="carregarPagina('perfil.html')">Perfil</a>
-          <a href="horarios.html" onclick="carregarPagina('horarios.html')">Horários</a>
-          <a href="pagamento.html" onclick="carregarPagina('pagamento.html')">Formas de Pagamento</a>
-          <a href="impressoras.html" onclick="carregarPagina('impressoras.html')">Impressoras</a>
-        </div>
-      </div>
-      <div class="menu-with-submenu">
-        <div class="menu-item" onclick="toggleSubmenu(this)">Configurações</div>
-        <div class="submenu">
-          <a href="impressoras.html" onclick="carregarPagina('impressoras.html')">Impressoras</a>
-        </div>
+      <div class="logout-button">
+        <a href="login.html">Sair</a>
       </div>
     </div>
 
     <div class="content">
-      <iframe id="conteudo" src="inicio.html"></iframe>
+      <h2>Bem-vindo!</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card p-3">
+            <h5>Pedidos do dia</h5>
+            <p><strong>0</strong></p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card p-3">
+            <h5>Faturamento</h5>
+            <p><strong>R$ 0,00</strong></p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card p-3">
+            <h5>Ticket médio</h5>
+            <p><strong>R$ 0,00</strong></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    function carregarPagina(pagina) {
-      document.getElementById('conteudo').src = pagina;
-      document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
-      const links = document.querySelectorAll('.sidebar a');
-      links.forEach(link => {
-        if (link.getAttribute('onclick')?.includes(pagina)) {
-          link.classList.add('active');
-        }
-      });
-    }
     function toggleSubmenu(el) {
       document.querySelectorAll('.menu-with-submenu').forEach(menu => {
         if (menu !== el.parentNode) {

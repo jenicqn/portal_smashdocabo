@@ -185,9 +185,9 @@
         pedido_minimo: parseFloat(document.getElementById("pedido_minimo").value) || 0,
         obs_finalizacao: document.getElementById("obs").value
       };
-      const { error } = await supabase.from("empresa").upsert([data]);
+      const { data: result, error } = await supabase.from("empresa").upsert([data], { onConflict: ['id'] });
       if (error) alert("Erro ao salvar: " + error.message);
-      else alert("Alterações salvas com sucesso!");
+      else { alert("✅ Alterações salvas com sucesso!"); console.log('Salvo:', result); }
     }
   </script>
 </body>

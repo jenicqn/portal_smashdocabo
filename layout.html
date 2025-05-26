@@ -4,80 +4,85 @@
   <meta charset="UTF-8" />
   <title>Painel SmashLovers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #ffffff;
+      color: #333;
     }
-
-    .sidebar {
-      width: 220px;
-      background-color: #0f172a;
-      color: white;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
+    .container-fluid {
       display: flex;
-      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
     }
-
+    .sidebar {
+      width: 260px;
+      background-color: #f8f9fa;
+      border-right: 1px solid #e0e0e0;
+      padding: 20px 0;
+      overflow-y: auto;
+    }
     .sidebar h4 {
-      padding: 20px;
-      margin: 0;
-      font-size: 20px;
+      padding: 0 20px;
+      margin-bottom: 1rem;
       font-weight: bold;
-      background-color: #f97316;
-      color: black;
-      border-bottom: 1px solid #1e2a47;
+      color: #000;
     }
-
     .sidebar a {
       display: block;
-      padding: 15px 20px;
-      color: white;
+      padding: 12px 20px;
+      color: #333;
       text-decoration: none;
+      font-weight: 500;
     }
-
     .sidebar a:hover,
     .sidebar a.active {
-      background-color: #1e2a47;
+      background-color: #e9ecef;
+      border-left: 4px solid #f97316;
     }
-
     .content {
-      margin-left: 220px;
+      flex-grow: 1;
       padding: 30px;
+      overflow-y: auto;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-
-  <!-- Menu lateral -->
-  <div class="sidebar">
-    <h4>Painel</h4>
-    <a href="index.html">Início</a>
-    <a href="#">Pedidos</a>
-
-    <div style="border-top: 1px solid #1e2a47; margin-top: 10px;">
-      <span style="font-weight: bold; color: #f97316; padding: 15px 20px; display: block;">Cardápio</span>
-      <a href="produtos.html" style="padding-left: 30px;">Produtos</a>
-      <a href="categorias.html" style="padding-left: 30px;">Categorias</a>
-      <a href="complementos.html" style="padding-left: 30px;">Complementos</a>
-      <a href="filtros.html" style="padding-left: 30px;">Filtros Avançados</a>
+  <div class="container-fluid">
+    <div class="sidebar">
+      <h4>Smash do Cabo</h4>
+      <a href="javascript:void(0)" onclick="carregarPagina('index.html')" class="active">Geral</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('pedidos.html')">Pedidos</a>
+      <div style="padding: 0 20px; margin-top: 10px; font-weight: bold; color: #f97316;">Cardápio</div>
+      <a href="javascript:void(0)" onclick="carregarPagina('produtos.html')">Produtos</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('categorias.html')">Categorias</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('complementos.html')">Complementos</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('filtros.html')">Filtros Avançados</a>
+      <div style="padding: 0 20px; margin-top: 10px; font-weight: bold; color: #f97316;">Minha Empresa</div>
+      <a href="javascript:void(0)" onclick="carregarPagina('perfil.html')">Perfil</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('horarios.html')">Horários</a>
+      <a href="javascript:void(0)" onclick="carregarPagina('pagamento.html')">Formas de Pagamento</a>
     </div>
-
-    <a href="#">Cupons</a>
-    <a href="#">Entregas</a>
-    <a href="#">Caixa</a>
+    <div class="content">
+      <iframe id="conteudo" src="index.html"></iframe>
+    </div>
   </div>
 
-  <!-- CONTEÚDO DA PÁGINA -->
-  <div class="content">
-    <h2 class="mb-4">Título da Página</h2>
-    <p>Adicione aqui o conteúdo específico desta página.</p>
-  </div>
+  <script>
+    function carregarPagina(pagina) {
+      document.getElementById('conteudo').src = pagina;
 
+      // Atualiza destaque do menu
+      document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
 </body>
 </html>

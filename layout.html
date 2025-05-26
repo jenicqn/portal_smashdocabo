@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -99,8 +98,12 @@
     }
     .content {
       flex-grow: 1;
-      padding: 30px;
-      overflow-y: auto;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
@@ -110,35 +113,35 @@
     <div class="sidebar">
       <div class="menu-wrapper">
         <h4>Menu</h4>
-        <a href="index.html">Geral</a>
+        <a href="javascript:void(0)" onclick="carregarPagina('index_conteudo.html')">Geral</a>
         <div class="menu-separator"></div>
-        <a href="pedidos.html">Pedidos</a>
+        <a href="javascript:void(0)" onclick="carregarPagina('pedidos.html')">Pedidos</a>
         <div class="menu-separator"></div>
 
         <div class="menu-with-submenu active">
           <div class="menu-item" onclick="toggleSubmenu(this)">Cardápio</div>
           <div class="submenu">
-            <a href="produtos.html">Produtos</a>
-            <a href="categorias.html">Categorias</a>
-            <a href="complementos.html">Complementos</a>
-            <a href="filtros.html">Filtros Avançados</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('produtos.html')">Produtos</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('categorias.html')">Categorias</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('complementos.html')">Complementos</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('filtros.html')">Filtros Avançados</a>
           </div>
         </div>
         <div class="menu-separator"></div>
-        <a href="cupons.html">Cupons</a>
+        <a href="javascript:void(0)" onclick="carregarPagina('cupons.html')">Cupons</a>
         <div class="menu-separator"></div>
-        <a href="entregas.html">Entregas</a>
+        <a href="javascript:void(0)" onclick="carregarPagina('entregas.html')">Entregas</a>
         <div class="menu-separator"></div>
-        <a href="caixa.html">Caixa</a>
+        <a href="javascript:void(0)" onclick="carregarPagina('caixa.html')">Caixa</a>
         <div class="menu-separator"></div>
 
         <div class="menu-with-submenu active">
           <div class="menu-item" onclick="toggleSubmenu(this)">Minha Empresa</div>
           <div class="submenu">
-            <a href="perfil.html">Perfil</a>
-            <a href="horarios.html">Horários</a>
-            <a href="pagamento.html">Formas de Pagamento</a>
-            <a href="impressoras.html">Impressoras</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('perfil.html')">Perfil</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('horarios.html')">Horários</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('pagamento.html')">Formas de Pagamento</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('impressoras.html')">Impressoras</a>
           </div>
         </div>
         <div class="menu-separator"></div>
@@ -146,7 +149,7 @@
         <div class="menu-with-submenu active">
           <div class="menu-item" onclick="toggleSubmenu(this)">Configurações</div>
           <div class="submenu">
-            <a href="impressoras.html">Impressoras</a>
+            <a href="javascript:void(0)" onclick="carregarPagina('impressoras.html')">Impressoras</a>
           </div>
         </div>
       </div>
@@ -157,8 +160,7 @@
     </div>
 
     <div class="content">
-      <h2>Exemplo de Conteúdo</h2>
-      <p>Essa é a estrutura base com menu lateral fixo, topo azul e botão de logout.</p>
+      <iframe id="conteudo" src="index_conteudo.html"></iframe>
     </div>
   </div>
 
@@ -170,6 +172,11 @@
         }
       });
       el.parentNode.classList.toggle('active');
+    }
+
+    function carregarPagina(pagina) {
+      const iframe = document.getElementById("conteudo");
+      iframe.src = pagina;
     }
   </script>
 </body>

@@ -71,6 +71,10 @@
     .menu-with-submenu.active .submenu {
       display: block;
     }
+    .menu-separator {
+      border-bottom: 1px solid #2596be;
+      margin: 10px 0;
+    }
     .content {
       flex-grow: 1;
       padding: 0;
@@ -90,6 +94,7 @@
       <h4>Menu</h4>
       <a href="javascript:void(0)" onclick="carregarPagina('inicio.html')" class="active">Geral</a>
       <a href="javascript:void(0)" onclick="carregarPagina('pedidos.html')">Pedidos</a>
+      <div class="menu-separator"></div>
 
       <div class="menu-with-submenu">
         <div class="menu-item" onclick="toggleSubmenu(this)">Cardápio</div>
@@ -100,10 +105,10 @@
           <a href="filtros.html" onclick="carregarPagina('filtros.html')">Filtros Avançados</a>
         </div>
       </div>
-
       <a href="javascript:void(0)" onclick="carregarPagina('cupons.html')">Cupons</a>
       <a href="javascript:void(0)" onclick="carregarPagina('entregas.html')">Entregas</a>
       <a href="javascript:void(0)" onclick="carregarPagina('caixa.html')">Caixa</a>
+      <div class="menu-separator"></div>
 
       <div class="menu-with-submenu">
         <div class="menu-item" onclick="toggleSubmenu(this)">Minha Empresa</div>
@@ -114,7 +119,6 @@
           <a href="impressoras.html" onclick="carregarPagina('impressoras.html')">Impressoras</a>
         </div>
       </div>
-
       <div class="menu-with-submenu">
         <div class="menu-item" onclick="toggleSubmenu(this)">Configurações</div>
         <div class="submenu">

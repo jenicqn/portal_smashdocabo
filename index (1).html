@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel SmashLovers</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #0f172a;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h4 {
+      padding: 20px;
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #f97316;
+      color: black;
+      border-bottom: 1px solid #1e2a47;
+    }
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #1e2a47;
+    }
+    .content {
+      margin-left: 220px;
+      padding: 30px;
+    }
+    .card {
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h4>Portal</h4>
+    <a href="index.html" class="active">Geral</a>
+    <a href="#">Pedidos</a>
+    <a href="javascript:void(0);" onclick="toggleCardapio()" style="font-weight: bold; color: #f97316;">
+      Cardápio <span id="cardapio-seta">▼</span>
+    </a>
+    <div id="submenu-cardapio" style="display: none; padding-left: 15px;">
+      <a href="produtos.html" style="padding-left: 15px;">Produtos</a>
+      <a href="categorias.html" style="padding-left: 15px;">Categorias</a>
+      <a href="complementos.html" style="padding-left: 15px;">Complementos</a>
+      <a href="filtros.html" style="padding-left: 15px;">Filtros Avançados</a>
+    </div>
+    <a href="#">Cupons</a>
+    <a href="#">Entregas</a>
+    <a href="#">Caixa</a>
+    <a href="javascript:void(0);" onclick="toggleEmpresa()" style="font-weight: bold; color: #f97316;">
+      Minha Empresa <span id="empresa-seta">▼</span>
+    </a>
+    <div id="submenu-empresa" style="display: none; padding-left: 15px;">
+      <a href="perfil.html" style="padding-left: 15px;">Perfil</a>
+      <a href="horarios.html" style="padding-left: 15px;">Horários</a>
+      <a href="pagamento.html" style="padding-left: 15px;">Formas de Pagamento</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <h2 class="mb-4">Bem-vindo ao Painel Smash do Cabo</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card p-3 shadow-sm">
+          <h5>Pedidos do dia</h5>
+          <p><strong>0</strong></p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-3 shadow-sm">
+          <h5>Faturamento</h5>
+          <p><strong>R$ 0,00</strong></p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-3 shadow-sm">
+          <h5>Ticket médio</h5>
+          <p><strong>R$ 0,00</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleCardapio() {
+      const submenu = document.getElementById("submenu-cardapio");
+      const seta = document.getElementById("cardapio-seta");
+      const estaVisivel = submenu.style.display === "block";
+      submenu.style.display = estaVisivel ? "none" : "block";
+      seta.textContent = estaVisivel ? "▼" : "▲";
+    }
+
+    function toggleEmpresa() {
+      const submenu = document.getElementById("submenu-empresa");
+      const seta = document.getElementById("empresa-seta");
+      const estaVisivel = submenu.style.display === "block";
+      submenu.style.display = estaVisivel ? "none" : "block";
+      seta.textContent = estaVisivel ? "▼" : "▲";
+    }
+  </script>
+</body>
+</html>

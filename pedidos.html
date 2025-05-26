@@ -1,1 +1,157 @@
-<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>pedidos.html</title><link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'></head><body class='p-4' style='font-family:Segoe UI,sans-serif;'><h2>Gestão de Pedidos</h2><p>Acompanhe aqui os pedidos em andamento, em preparo, concluídos e entregues.</p></body></html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pedidos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #fff; padding: 20px; }
+    .barra-controle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .barra-controle input[type="text"] {
+      width: 300px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .tempo-entrega input {
+      width: 70px;
+      padding: 6px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-right: 4px;
+    }
+    .coluna-pedidos {
+      display: flex;
+      gap: 20px;
+    }
+    .coluna {
+      flex: 1;
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 400px;
+    }
+    .coluna h5 {
+      margin-bottom: 10px;
+    }
+    .pedido {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-left: 5px solid #f97316;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: grab;
+    }
+    .pedido.saiu { border-left-color: #facc15; }
+    .pedido.concluido { border-left-color: #4ade80; }
+    .pedido small { display: block; color: #555; }
+    .pedido strong { font-size: 15px; }
+    .pedido .btn-group { margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="barra-controle">
+    <input type="text" placeholder="Pesquisar por cliente, telefone ou pedido..." id="busca">
+    <div>
+      <label class="me-2">⏱️ Tempo estimado (min):</label>
+      <div class="tempo-entrega d-inline-block">
+        <input type="number" id="tempoMoto" value="50"> moto
+        <input type="number" id="tempoBike" value="50"> bike
+      </div>
+    </div>
+    <button class="btn btn-primary">+ Novo Pedido</button>
+  </div>
+
+  <div class="coluna-pedidos">
+    <div class="coluna" id="preparo" ondrop="soltar(event, 'preparo')" ondragover="permitirSoltar(event)">
+      <h5>Em preparo</h5>
+    </div>
+    <div class="coluna" id="entrega" ondrop="soltar(event, 'entrega')" ondragover="permitirSoltar(event)">
+      <h5>Saiu para entrega</h5>
+    </div>
+    <div class="coluna" id="concluido" ondrop="soltar(event, 'concluido')" ondragover="permitirSoltar(event)">
+      <h5>Concluído</h5>
+    </div>
+  </div>
+
+<script>
+  const supabase = window.supabase.createClient(
+    'https://oyoirjgfwsvtfmsvecfd.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95b2lyamdmd3N2dGZtc3ZlY2ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgyMTI3NjMsImV4cCI6MjA2Mzc4ODc2M30.s6MkXu1bGKgGsQj6ovea9d9bfOwRi-4sitHdCJb08G8'
+  );
+
+  async function carregarPedidos() {
+    const { data: pedidos } = await supabase
+      .from('pedidos')
+      .select('*')
+      .order('criado_em', { ascending: false });
+
+    ['preparo', 'entrega', 'concluido'].forEach(status => {
+      document.getElementById(status).innerHTML = `<h5>${status === 'preparo' ? 'Em preparo' : status === 'entrega' ? 'Saiu para entrega' : 'Concluído'}</h5>`;
+    });
+
+    pedidos.forEach(p => {
+      const div = document.createElement('div');
+      div.className = `pedido ${p.status}`;
+      div.draggable = true;
+      div.id = 'pedido-' + p.id;
+      div.ondragstart = arrastar;
+      div.innerHTML = `
+        <strong>${p.cliente_nome}</strong>
+        <small>#${p.numero_pedido} • R$ ${parseFloat(p.valor_total).toFixed(2)}</small>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-outline-secondary" onclick="editarPedido(${p.id})">✏️</button>
+          <button class="btn btn-outline-success" onclick="mudarStatus(${p.id}, 'concluido')">✅</button>
+          <button class="btn btn-outline-warning" onclick="voltarEtapa(${p.id})">↩️</button>
+        </div>
+      `;
+      document.getElementById(p.status).appendChild(div);
+    });
+  }
+
+  function arrastar(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  async function soltar(ev, novoStatus) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData("text").replace('pedido-', '');
+    await supabase.from('pedidos').update({ status: novoStatus }).eq('id', id);
+    carregarPedidos();
+  }
+
+  function permitirSoltar(ev) {
+    ev.preventDefault();
+  }
+
+  async function mudarStatus(id, novoStatus) {
+    await supabase.from('pedidos').update({ status: novoStatus }).eq('id', id);
+    carregarPedidos();
+  }
+
+  async function voltarEtapa(id) {
+    const { data } = await supabase.from('pedidos').select('status').eq('id', id).single();
+    let novoStatus = data.status === 'concluido' ? 'entrega' : 'preparo';
+    await mudarStatus(id, novoStatus);
+  }
+
+  function editarPedido(id) {
+    alert('Em breve: tela de edição para o pedido #' + id);
+  }
+
+  carregarPedidos();
+</script>
+</body>
+</html>

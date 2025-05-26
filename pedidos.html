@@ -2,49 +2,79 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Pedidos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedidos</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #fff;
+      background-color: #ffffff;
     }
-
+    .topbar {
+      background-color: #2596be;
+      color: white;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .layout {
+      display: flex;
+    }
     .sidebar {
       width: 220px;
-      background-color: #0f172a;
-      color: white;
-      min-height: 100vh;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      height: 100vh;
+      position: fixed;
+      top: 58px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-
-    .sidebar h4 {
-      padding: 20px;
-      margin: 0;
-      font-size: 20px;
-      font-weight: bold;
-      border-bottom: 1px solid #1e2a47;
+    .sidebar .menu {
+      padding-top: 10px;
     }
-
     .sidebar a {
       display: block;
-      padding: 15px 20px;
-      color: white;
+      padding: 12px 20px;
+      color: #000;
       text-decoration: none;
+      border-left: 3px solid transparent;
     }
-
-    .sidebar a:hover,
     .sidebar a.active {
-      background-color: #1e2a47;
+      background-color: #eaf4ff;
+      color: #007bff;
+      border-left: 3px solid #007bff;
     }
-
-    .main-content {
-      flex-grow: 1;
-      padding: 20px;
+    .sidebar a:hover {
+      background-color: #f0f8ff;
     }
-
+    .submenu {
+      display: none;
+      background: #f9f9f9;
+    }
+    .has-submenu:hover .submenu {
+      display: block;
+      position: absolute;
+      left: 220px;
+      top: 0;
+      min-width: 180px;
+      border: 1px solid #ddd;
+    }
+    .submenu a {
+      padding: 10px 15px;
+    }
+    .btn-sair {
+      margin: 20px;
+    }
+    .main {
+      margin-left: 220px;
+      padding: 30px;
+      padding-top: 90px;
+    }
     .barra-controle {
       display: flex;
       align-items: center;
@@ -52,14 +82,12 @@
       flex-wrap: wrap;
       margin-bottom: 20px;
     }
-
     .barra-controle input[type="text"] {
       width: 300px;
       padding: 8px 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-
     .tempo-entrega input {
       width: 70px;
       padding: 6px;
@@ -68,12 +96,11 @@
       border: 1px solid #ccc;
       margin-right: 4px;
     }
-
     .coluna-pedidos {
       display: flex;
       gap: 20px;
+      flex-wrap: wrap;
     }
-
     .coluna {
       flex: 1;
       background: #f9f9f9;
@@ -82,11 +109,10 @@
       padding: 10px;
       min-height: 400px;
     }
-
     .coluna h5 {
       margin-bottom: 10px;
+      font-weight: 600;
     }
-
     .pedido {
       background: #fff;
       border: 1px solid #ddd;
@@ -96,58 +122,71 @@
       margin-bottom: 10px;
       cursor: grab;
     }
-
     .pedido.saiu { border-left-color: #facc15; }
     .pedido.concluido { border-left-color: #4ade80; }
-    .pedido small { display: block; color: #555; }
-    .pedido strong { font-size: 15px; }
-    .pedido .btn-group { margin-top: 5px; }
-
-    .layout {
-      display: flex;
-    }
   </style>
 </head>
 <body>
-<div class="layout">
-  <!-- MENU LATERAL -->
-  <div class="sidebar">
-    <h4>Painel</h4>
-    <a href="painel.html">Início</a>
-    <a href="respostas.html">Gestão das Respostas</a>
-    <a href="usuarios.html">Usuários</a>
-    <a href="cupons.html">Cupons</a>
-    <a href="pedidos.html" class="active">Pedidos</a>
-    <a href="relatorios.html">Relatórios</a>
-  </div>
-
-  <!-- CONTEÚDO PRINCIPAL -->
-  <div class="main-content">
-    <div class="barra-controle">
-      <input type="text" placeholder="Pesquisar por cliente, telefone ou pedido..." id="busca">
-      <div>
-        <label class="me-2">⏱️ Tempo estimado (min):</label>
-        <div class="tempo-entrega d-inline-block">
-          <input type="number" id="tempoMoto" value="50"> moto
-          <input type="number" id="tempoBike" value="50"> bike
+  <div class="topbar">Portal Smash do Cabo</div>
+  <div class="layout">
+    <div class="sidebar">
+      <div class="menu">
+        <a href="painel.html">Geral</a>
+        <a href="pedidos.html" class="active">Pedidos</a>
+        <div class="has-submenu">
+          <a href="#">Cardápio</a>
+          <div class="submenu">
+            <a href="produtos.html">Produtos</a>
+            <a href="categorias.html">Categorias</a>
+          </div>
+        </div>
+        <a href="cupons.html">Cupons</a>
+        <a href="entregas.html">Entregas</a>
+        <a href="caixa.html">Caixa</a>
+        <div class="has-submenu">
+          <a href="#">Minha Empresa</a>
+          <div class="submenu">
+            <a href="perfil.html">Perfil</a>
+            <a href="horarios.html">Horários</a>
+            <a href="pagamento.html">Formas de Pagamento</a>
+          </div>
+        </div>
+        <div class="has-submenu">
+          <a href="#">Configurações</a>
+          <div class="submenu">
+            <a href="impressoras.html">Impressoras</a>
+          </div>
         </div>
       </div>
-      <button class="btn btn-primary">+ Novo Pedido</button>
+      <button class="btn btn-info btn-sair">Sair</button>
     </div>
 
-    <div class="coluna-pedidos">
-      <div class="coluna" id="preparo" ondrop="soltar(event, 'preparo')" ondragover="permitirSoltar(event)">
-        <h5>Em preparo</h5>
+    <div class="main">
+      <div class="barra-controle">
+        <input type="text" placeholder="Pesquisar por cliente, telefone ou pedido..." id="busca">
+        <div>
+          <label class="me-2">⏱️ Tempo estimado (min):</label>
+          <div class="tempo-entrega d-inline-block">
+            <input type="number" id="tempoMoto" value="50"> moto
+            <input type="number" id="tempoBike" value="50"> bike
+          </div>
+        </div>
+        <button class="btn btn-primary">+ Novo Pedido</button>
       </div>
-      <div class="coluna" id="entrega" ondrop="soltar(event, 'entrega')" ondragover="permitirSoltar(event)">
-        <h5>Saiu para entrega</h5>
-      </div>
-      <div class="coluna" id="concluido" ondrop="soltar(event, 'concluido')" ondragover="permitirSoltar(event)">
-        <h5>Concluído</h5>
+
+      <div class="coluna-pedidos">
+        <div class="coluna" id="preparo" ondrop="soltar(event, 'preparo')" ondragover="permitirSoltar(event)">
+          <h5>Em preparo</h5>
+        </div>
+        <div class="coluna" id="entrega" ondrop="soltar(event, 'entrega')" ondragover="permitirSoltar(event)">
+          <h5>Saiu para entrega</h5>
+        </div>
+        <div class="coluna" id="concluido" ondrop="soltar(event, 'concluido')" ondragover="permitirSoltar(event)">
+          <h5>Concluído</h5>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 <script>
   const supabase = window.supabase.createClient(
